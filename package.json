@@ -1,13 +1,14 @@
 {
-  "name": "ratemyprofessor-api",
+  "name": "api-rmp",
   "keywords": ["ratemyprofessor", "rmp", "professor", "rate my professor", "rate", "api", "graphql"],
-  "version": "1.0.1",
-  "description": " A wrapper for the Rate My Professor (RMP) GraphQL database",
+  "version": "1.0.3",
+  "description": " A wrapper for the Rate My Professor (RMP) GraphQL database, with functionality to get comments and reviews.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "node ./dist/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "npm run build && npm run test"
   },
   "repository": {
     "type": "git",
