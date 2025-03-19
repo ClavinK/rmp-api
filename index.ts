@@ -568,11 +568,10 @@ export async function getProfessorRatingAtSchoolId(
       id: "",
           };
   }
-  const professorResult = searchResults[0];
-  var i: number = 0;
-  for (i; i < searchResults.length; i++) {
+  let professorResult = searchResults[0];
+  for (let i = 0; i < searchResults.length; i++) {
     if (searchResults[i].node.firstName + " " + searchResults[i].node.lastName == professorName) {
-      const professorResult = searchResults[i];
+      professorResult = searchResults[i];
       break;
     }
   }
