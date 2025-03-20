@@ -590,3 +590,63 @@ export async function getProfessorRatingAtSchoolId(
     id: professorResult.node.id,
       };
 }
+
+export interface IComment {
+  id: string;
+  comment: string;
+  date: string;
+  helpfulRating: number;
+  clarityRating: number;
+  difficultyRating: number;
+  isForOnlineClass: boolean;
+  ratingTags: string[];
+  thumbsUpTotal: number;
+  thumbsDownTotal: number;
+  wouldTakeAgain: boolean | null;
+  grade: string;
+  class: string;
+}
+export async function getComments(teacherId: string): Promise<IComment[]> {
+  try {
+    const response = await fetch(API_LINK, {
+      credentials: "include",
+      headers: HEADERS,
+      body: JSON.stringify({
+        query: TEACHER_QUERY,
+        variables: { id: teacherId },
+      }),
+      method: "POST",
+      mode: "cors",
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response from RMP not OK");
+    }
+    
+    const data = await response.json();
+    console.log(data)
+    if (!data || !data.data || !data.data.node || !data.data.node.ratings) {
+      throw new Error("No data found for the given teacher ID");
+    }
+
+    const comments = data.data.node.ratings.edges.map((edge: any) => ({
+      id: edge.node.id,
+      comment: edge.node.comment,
+      date: edge.node.date,
+      helpfulRating: edge.node.helpfulRating,
+      clarityRating: edge.node.clarityRating,
+      difficultyRating: edge.node.difficultyRating,
+      isForOnlineClass: edge.node.isForOnlineClass,
+      ratingTags: edge.node.ratingTags,
+      thumbsUpTotal: edge.node.thumbsUpTotal,
+      thumbsDownTotal: edge.node.thumbsDownTotal,
+      wouldTakeAgain: edge.node.wouldTakeAgain,
+      grade: edge.node.grade,
+      class: edge.node.class,
+    })) as IComment[];
+    return comments;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
