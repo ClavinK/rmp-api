@@ -22,7 +22,7 @@ import {searchProfessorsAtSchoolId, searchSchool, getProfessorRatingAtSchoolId, 
     schoolId
   );
   console.log(ProfessorRatings);
-  //* Example Result:
+  /* Example Result:
   {
     avgRating: 3.5,
     avgDifficulty: 2.6,
@@ -33,13 +33,13 @@ import {searchProfessorsAtSchoolId, searchSchool, getProfessorRatingAtSchoolId, 
     link: 'https://www.ratemyprofessors.com/professor/2815242',
     id: 'VGVhY2hlci0yODE1MjQy'
   }
-  *//
+  */
 
   //* to get comments for a specific professor with their respective ID *//
   //* Grab ID's with the getProfessorRatingAtSchoolId function *//
   const comments = await getComments("VGVhY2hlci0yODE1MjQy");
   console.log(comments);
-  //* Example Result:
+  /* Example Result:
   {
   data: {
     node: {
@@ -368,7 +368,7 @@ import {searchProfessorsAtSchoolId, searchSchool, getProfessorRatingAtSchoolId, 
     class: 'CS4200'
   }
 ]
-*//
+*/
 })();
 
 ```
