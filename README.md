@@ -1,5 +1,8 @@
 A basic, up-to-date (as of March 2025) wrapper for RateMyProfessor's GraphQL API built using typescript. 
 
+## Installation
+npm install api-rmp
+
 ## Usage
 
 ```js
