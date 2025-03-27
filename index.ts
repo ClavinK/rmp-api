@@ -568,12 +568,19 @@ export async function getProfessorRatingAtSchoolId(
       id: "",
           };
   }
+  
   let professorResult = searchResults[0];
+  professorName = professorName.replace(/[^a-zA-Z0-9]/g, "");
   for (let i = 0; i < searchResults.length; i++) {
-    if (searchResults[i].node.firstName + " " + searchResults[i].node.lastName == professorName) {
+    searchResults[i].node.firstName = searchResults[i].node.firstName.replace(/[^a-zA-Z0-9]/g, "");
+    searchResults[i].node.lastName = searchResults[i].node.lastName.replace(/[^a-zA-Z0-9]/g, "");
+    if (searchResults[i].node.firstName + searchResults[i].node.lastName == professorName) {
       professorResult = searchResults[i];
       break;
+    } else {
+      console.log("No exact match found, using first result");
     }
+    
   }
 
   return {
