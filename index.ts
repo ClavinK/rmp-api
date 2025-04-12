@@ -570,32 +570,46 @@ export async function getProfessorRatingAtSchoolId(
   }
   
   let professorResult = searchResults[0];
+  let result = false
   professorName = professorName.replace(/[^a-zA-Z0-9]/g, "");
   for (let i = 0; i < searchResults.length; i++) {
     searchResults[i].node.firstName = searchResults[i].node.firstName.replace(/[^a-zA-Z0-9]/g, "");
     searchResults[i].node.lastName = searchResults[i].node.lastName.replace(/[^a-zA-Z0-9]/g, "");
     if (searchResults[i].node.firstName + searchResults[i].node.lastName == professorName) {
       professorResult = searchResults[i];
+      result = true
       break;
-    } else {
-      console.log("No exact match found, using first result");
     }
-    
   }
 
-  return {
-    avgRating: professorResult.node.avgRating,
-    avgDifficulty: professorResult.node.avgDifficulty,
-    wouldTakeAgainPercent: professorResult.node.wouldTakeAgainPercent,
-    numRatings: professorResult.node.numRatings,
-    formattedName:
-      professorResult.node.firstName + " " + professorResult.node.lastName,
-    department: professorResult.node.department,
-    link:
-      "https://www.ratemyprofessors.com/professor/" +
-      professorResult.node.legacyId,
-    id: professorResult.node.id,
-      };
+  if (result == false) {
+      return {
+        avgRating: -1,
+        avgDifficulty: -1,
+        wouldTakeAgainPercent: 0,
+        numRatings: 0,
+        formattedName:
+          "Professor data not found.",
+        department: "Professor data not found.",
+        link:
+          "",
+        id: "0",
+    }
+  } else {
+    return {
+      avgRating: professorResult.node.avgRating,
+      avgDifficulty: professorResult.node.avgDifficulty,
+      wouldTakeAgainPercent: professorResult.node.wouldTakeAgainPercent,
+      numRatings: professorResult.node.numRatings,
+      formattedName:
+        professorResult.node.firstName + " " + professorResult.node.lastName,
+      department: professorResult.node.department,
+      link:
+        "https://www.ratemyprofessors.com/professor/" +
+        professorResult.node.legacyId,
+      id: professorResult.node.id,
+        };
+  }
 }
 
 export interface IComment {
@@ -657,3 +671,10 @@ export async function getComments(teacherId: string): Promise<IComment[]> {
     return [];
   }
 }
+
+async function test() {
+  const command = await getProfessorRatingAtSchoolId("Mary Maupin", "U2Nob29sLTEzOTE0")
+  console.log(command)
+}
+
+test()
